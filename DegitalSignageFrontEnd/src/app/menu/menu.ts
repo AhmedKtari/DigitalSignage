@@ -34,7 +34,6 @@ export class MenuComponent {
     navigateToProfile() {
       console.log('Navigating to profile...');
       this.username = this.authentservice.getAuthenticatedUser() 
-      alert('Navigating to profile for user: ' + this.username);
       this.router.navigate(['/profile/', this.username]);
       
       

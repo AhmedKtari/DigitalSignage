@@ -1,0 +1,15 @@
+.media-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.media-table th {
+  text-align: left; padding: 10px 14px; background: #f4f4f5;
+  border-bottom: 2px solid #e4e4e7; font-weight: 600; color: #52525b;
+}
+.media-table td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+.media-table tr:hover { background: #fafafa; }
+.media-thumb { width: 56px; height: 56px; object-fit: cover; border-radius: 6px; border: 1px solid #e4e4e7; }
+.name-cell { font-weight: 500; color: #18181b; }
+.size-cell { color: #71717a; }
+.type-badge {
+  padding: 2px 8px; border-radius: 999px; font-size: 12px; font-weight: 500; text-transform: capitalize;
+}
+.type-badge.type-image { background: #dbeafe; color: #1d4ed8; }
+.type-badge.type-video { background: #fce7f3; color: #be185d; }

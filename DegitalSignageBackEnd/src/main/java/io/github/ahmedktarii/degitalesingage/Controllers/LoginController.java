@@ -14,19 +14,23 @@ import java.util.Objects;
 @CrossOrigin
 public class LoginController {
 
+    // calling the user service
     @Autowired
     private UserService userService;;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request ) {
+        // checking the user existence
         if (!userService.doesEmailExist(request.getEmailRequest()) )
         {
             return ResponseEntity.badRequest().body(Map.of("message", "user doesn't exist"));
         }
+        // checking the credentials email + password
         if(!((Objects.equals(userService.grapPasswordByEmail(request.getEmailRequest()), request.getPasswordRequest())))){
             return ResponseEntity.badRequest().body(Map.of("message", "wrong credentials"));
         }
         else {
+            // all good
             return ResponseEntity.ok(Map.of(
                     "message", "login successful",
                     "username", userService.grapUsernameByEmail(request.getEmailRequest()).toString(),

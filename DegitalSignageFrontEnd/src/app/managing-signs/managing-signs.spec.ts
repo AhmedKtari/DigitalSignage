@@ -10,7 +10,7 @@ describe('ManagingSignsComponent', () => {
     await TestBed.configureTestingModule({
       imports: [ManagingSignsComponent],
     }).compileComponents();
-
+                                                       
     fixture = TestBed.createComponent(ManagingSignsComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();

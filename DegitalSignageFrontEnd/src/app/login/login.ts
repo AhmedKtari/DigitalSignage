@@ -36,7 +36,7 @@ export class LoginComponent {
   });
 
   const data = await response.json();
- alert(data.username)
+  
   
   if (response.ok) {
     this.authentservice.authenticatedUsername = String(data.username);

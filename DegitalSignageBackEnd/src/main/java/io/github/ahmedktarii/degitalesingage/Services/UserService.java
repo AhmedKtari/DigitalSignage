@@ -28,7 +28,7 @@ public class UserService {
         return user != null ;
     }
     public Long grapIdByEmail(String email) {
-        System.out.println("Looking up email: [" + email + "]");
+        
         User user = userRepository.findByEmail(email);
         if (user == null) {
             throw new RuntimeException("No user found for email: " + email);

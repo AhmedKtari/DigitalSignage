@@ -44,30 +44,39 @@
                 <label for="signageCategory">Signage Category</label>
                 <input type="text" class="form-control" id="signageCategory" placeholder="Enter signage category">
                 <textarea class="form-control mt-2" id="signageDescription" rows="5" placeholder="Enter signage description"></textarea>
-                <label for="StartingDsate" class="mt-2">Starting Date</label>
-                <input type="date" class="form-control mt-2" id="StartingDate">
+                <label for="StartingDate" class="mt-2">Starting Date</label>
+                <input type="datetime-local" class="form-control mt-2" id="StartingDate">
                 <label for="EndingDate" class="mt-2">Ending Date</label>
-                <input type="date" class="form-control mt-2" id="EndingDate">
-                <button class="btn btn-primary mt-2" (click)="ShowMedia = !ShowMedia">Show Media</button>
+                <input type="datetime-local" class="form-control mt-2" id="EndingDate">
+                <button class="btn btn-primary mt-2" (click)="ShowMedia = !ShowMedia;showingMedia();">Show Media</button>
                 @if (ShowMedia) {
-                <div>
-                      Media Will be shown here
-                      <!-- this is an example  -->
-                            <div></div>          
-
-
-
-                      <label for="signageImage" class="mt-2">Upload Media</label>
+                <table class="media-table">
+              <thead>
+                <tr>
+                  <th>Preview</th>
+                  <th>Name</th>
+                  <th>Type</th>
+                  <th>Size</th>
+                </tr>
+              </thead>
+              <tbody id="mediaTableBody">
+                <!-- Media items will be dynamically inserted here -->
+               
+              </tbody>
+            </table>
+               
+          <label for="signageImage" class="mt-2">Upload Media</label>
                       <input type="file" class="form-control-file mt-2" id="signageImage">
                       <button class="btn btn-success mt-2" (click)="uploadMedia()">Upload Media</button>
-                  </div>
-                } 
+          } 
+                
               </div>
-            
-
-
 
         </div>
+        <input type="radio" id="scheduleMode" name="mode" value="schedule" checked> schedule
+        <input type="radio" id="immediateMode" name="mode" value="immediate"> immediate
+        <button class="btn btn-primary mt-2" (click)="createSign()">Create Signage</button>
+
       }
        
       @if (ShowBrowseSignageContent) {
@@ -77,7 +86,7 @@
           <p>Here you can browse existing signage.</p>
         </div>
       }
-
+      
     </div>
 
   </div>
