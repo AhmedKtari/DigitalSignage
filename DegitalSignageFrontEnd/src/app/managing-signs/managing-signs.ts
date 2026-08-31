@@ -120,15 +120,15 @@ export class ManagingSignsComponent {
     const result = await response.json();
   }
   async createSign() {
-    const signageNameInput = document.getElementById('signageName') as HTMLInputElement;
-    const signageName = signageNameInput.value.trim();
+    const signageTitleInput = document.getElementById('signageTitle') as HTMLInputElement;
+    const signageTitle = signageTitleInput.value.trim();
     const startDateInput = document.getElementById('StartingDate') as HTMLInputElement;
     const endDateInput = document.getElementById('EndingDate') as HTMLInputElement;
     const immediateModeInput = document.getElementById('immediateMode') as HTMLInputElement;
     this.startDate = startDateInput.value;
     this.endDate = endDateInput.value;
-    if (!signageName) {
-      alert("Please enter a signage name");
+    if (!signageTitle) {
+      alert("Please enter a signage title");
       return;
     }
     if (this.selectedMediaId === null) {
@@ -153,7 +153,7 @@ export class ManagingSignsComponent {
          body: JSON.stringify({ 
                                 userEmailRequest: email, 
                                 mediaIdRequest: this.selectedMediaId,
-                                signNameRequest: signageName ,
+                                signTitleRequest: signageTitle ,
                                 signStartDateRequest: this.startDate,
                                 signEndDateRequest: this.endDate,
                                 signstatusRequest: this.status
