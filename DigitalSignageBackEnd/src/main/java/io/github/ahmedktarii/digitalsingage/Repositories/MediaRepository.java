@@ -10,4 +10,5 @@ public interface MediaRepository extends JpaRepository<Media, Long> {
     //List<Media> findAllByEmailOrderByDateDesc(String email);
     List<Media>findAllByUploadedByOrderByCreatedAtDesc(long uploadedBy);
     Media findByFileHash(String fileHash);
+
 }

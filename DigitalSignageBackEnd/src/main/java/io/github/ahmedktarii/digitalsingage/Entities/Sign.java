@@ -13,11 +13,11 @@ public class Sign {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
 
-    @JoinColumn(name = "owner_id", nullable = false)
-    private Long owner;
+    @Column(name = "owner_id")
+    private Long ownerId;
 
     @Column(nullable = false, length = 25 )
     private String title;
@@ -27,9 +27,8 @@ public class Sign {
     @Column(nullable = false, unique = true, length = 255)
     private String slug;
 
-    // Online | Offline | disabled ;
-    @Enumerated(EnumType.STRING)
-    private signStatus status;
+
+    private String status;
 
 
     @Column(name = "created_at", updatable = false)

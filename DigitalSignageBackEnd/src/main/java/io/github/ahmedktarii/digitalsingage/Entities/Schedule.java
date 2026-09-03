@@ -2,32 +2,29 @@ package io.github.ahmedktarii.digitalsingage.Entities;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "schedule")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Schedule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+
     @JoinColumn(name = "sign_id", nullable = false)
-    private Sign sign;
+    private Long signId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+
     @JoinColumn(name = "media_id", nullable = false)
-    private Media media;
+    private Long mediaId;
 
     @Column(name = "start_time", nullable = false)
     private Timestamp startTime;

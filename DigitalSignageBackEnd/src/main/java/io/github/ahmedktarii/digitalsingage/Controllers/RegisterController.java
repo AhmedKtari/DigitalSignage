@@ -46,7 +46,8 @@ public class RegisterController {
                 "message", "login successful",
                 "username", newUser.getUsername(),
                 "email", newUser.getEmail()
-        ));
+        )
+        );
 
 
     }

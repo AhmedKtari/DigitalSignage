@@ -17,7 +17,6 @@ public class MediaService {
     public void save(Media media) {
         mediaRepository.save(media);
     }
-
     public List<Media> filterBySize(long size) {
         return mediaRepository.findMediaBySize(size);
     }
@@ -27,6 +26,5 @@ public class MediaService {
     public List<Media> findAllByUploadedByOrderByCreatedAtDesc(long UploadedBy) {
         return mediaRepository.findAllByUploadedByOrderByCreatedAtDesc(UploadedBy);
     }
-
 }
 

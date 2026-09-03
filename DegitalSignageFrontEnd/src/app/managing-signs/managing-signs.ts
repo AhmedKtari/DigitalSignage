@@ -23,7 +23,9 @@ export class ManagingSignsComponent {
   ShowCreateSignageContent: boolean = false;
   ShowBrowseSignageContent: boolean = false;
   scheduledSignage: boolean = false;
+  showStartfield: boolean = false;
   ShowMedia: boolean = false;
+   scheduleMode: 'schedule' | 'immediate' = 'immediate';
   mediaList: Media[] = [];
   selectedMediaId: number | null = null;
   startDate: string = '';
@@ -46,7 +48,6 @@ export class ManagingSignsComponent {
   }
 
   async showingMedia(){
-    alert("clicked");
     const email = this.authService.getAuthenticatedEmail();
     const response = await fetch(
       `http://localhost:8080/api/media/showMedia?emailRequest=${encodeURIComponent(email || '')}`,
@@ -81,6 +82,7 @@ export class ManagingSignsComponent {
   row.style.cursor = 'pointer';
   row.innerHTML = `
     <td class="preview-cell">
+      <input type="radio"  name="mediaSelection" value="${media.id}" ${this.selectedMediaId === media.id ? 'checked' : ''}>
       <img src="${media.link}" alt="${media.name}" style="width:56px;height:56px;object-fit:cover;border-radius:6px;" onerror="this.style.display='none'">
     </td>
     <td class="name-cell">${media.name}</td>
@@ -88,13 +90,10 @@ export class ManagingSignsComponent {
     <td class="size-cell">${(media.size / 1024).toFixed(1)} KB</td>
   `;
 
-  row.addEventListener('click', () => this.rowClicked(media.id));
+  
   tableBody.appendChild(row);
 }
 }
-  }
-  rowClicked(mediaId: number) {
-    this.selectedMediaId = mediaId;
   }
   async uploadMedia() {
     const fileInput = document.getElementById('signageImage') as HTMLInputElement;
@@ -120,31 +119,62 @@ export class ManagingSignsComponent {
     const result = await response.json();
   }
   async createSign() {
+    alert("clicked 1"); 
     const signageTitleInput = document.getElementById('signageTitle') as HTMLInputElement;
     const signageTitle = signageTitleInput.value.trim();
     const startDateInput = document.getElementById('StartingDate') as HTMLInputElement;
     const endDateInput = document.getElementById('EndingDate') as HTMLInputElement;
     const immediateModeInput = document.getElementById('immediateMode') as HTMLInputElement;
-    this.startDate = startDateInput.value;
+    const mediaSelectionInputs = document.getElementsByName('mediaSelection') as NodeListOf<HTMLInputElement>;
+    let selectedMediaIdAsString: string | null = null;
+    for (const input of mediaSelectionInputs) {
+      if (input.checked) {
+        selectedMediaIdAsString = input.value;
+        alert("Selected Media ID: " + selectedMediaIdAsString);
+        break;
+      }
+    }
+    if(this.scheduleMode === 'schedule') {
+      this.startDate = startDateInput.value;
+  
+    } else {
+      this.startDate = new Date().toISOString();
+      
+    }
     this.endDate = endDateInput.value;
-    if (!signageTitle) {
+    this.selectedMediaId = selectedMediaIdAsString !== null ? parseInt(selectedMediaIdAsString) : null;
+  
+    if (signageTitle=="") {
       alert("Please enter a signage title");
       return;
     }
+    alert("clicked 2"); 
     if (this.selectedMediaId === null) {
       alert("Please select a media");
       return;
     }
-    if (immediateModeInput.checked) {
-      this.status = "online";
-      
-      }
-
+    if (this.scheduleMode === 'schedule' && (this.startDate === '' || this.endDate === '')) {
+      alert("Please select start and end dates for scheduled signage");
+      return;
+    }
+    if (this.scheduleMode === 'schedule' && this.startDate >= this.endDate) {
+      alert("Start date must be before end date");
+      return;
+    }
+    if(this.endDate === ''){
+      alert("Please select an end date");
+      return;
+    }
+    if (this.scheduleMode === 'immediate') {
+      this.status = 'online';
+    }
+    
+  
     const email = this.authService.getAuthenticatedEmail();
    
          const response = await fetch
 (
-          'http://localhost:8080/api/auth/sign/createSign',
+          'http://localhost:8080/api/sign/createSign',
   {
        method: 'POST',
        headers: { 'Content-Type': 'application/json' 
@@ -159,15 +189,17 @@ export class ManagingSignsComponent {
                                 signstatusRequest: this.status
                               }
                                 )
-   }
+    }
                               )
    
 
-    
-    if (!response.ok) {
+     alert("waiting for response");
       const result = await response.json();
+      alert("response received");
+      alert("Result: " + JSON.stringify(result));
       alert(result.message);
+      alert(result.url);
       return;
-    }
+    
   }
 }
